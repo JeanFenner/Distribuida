@@ -42,7 +42,7 @@ if __name__ == "__main__":
     receive_thread = threading.Thread(target=receive)
     receive_thread.start()
 
-    print("Escreva uma mensagem:")
+    print("Conectar?")
     m = input()
 
     write_thread = threading.Thread(target=write)
