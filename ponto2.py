@@ -41,7 +41,7 @@ if __name__ == "__main__":
     receive_thread = threading.Thread(target=receive)
     receive_thread.start()
 
-    print("Escreva uma mensagem:")
+    print("Conectar?")
     m = input()
 
     client_socket.connect((client_add, client_port))
