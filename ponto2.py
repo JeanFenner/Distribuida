@@ -17,17 +17,25 @@ def receive():
     """
     Função para receber mensagens do servidor.
     """
+
+    c, a = server_socket.accept()
+
     while True:
         try:
             # Recebe a mensagem do servidor
             message = server_socket.recv(1024).decode("utf-8")
             print(message)
+            print(message)
+            f = open("ponto2.txt", "w")
+            print(message, file=f)
         except:
             # Se houver erro na conexão, encerra a conexão
             server_socket.close()
+            c.close()
             break
 
 def write():
+    client_socket.connect((client_add, client_port))
     """
     Função para enviar mensagens para o servidor.
     """
@@ -44,6 +52,5 @@ if __name__ == "__main__":
     print("Conectar?")
     m = input()
 
-    client_socket.connect((client_add, client_port))
     write_thread = threading.Thread(target=write)
     write_thread.start()

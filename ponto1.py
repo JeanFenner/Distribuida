@@ -12,23 +12,27 @@ server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_socket.bind((IP, PORT))
 server_socket.listen()
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client_socket.connect((client_add, client_port))
 
 def receive():
     """
     Função para receber mensagens do servidor.
     """
+    c, a = server_socket.accept()
     while True:
         try:
             # Recebe a mensagem do servidor
             message = server_socket.recv(1024).decode("utf-8")
-            print(message)
+            print("From: ", a, ": ", message)
+            f = open("ponto1.txt", "w")
+            print(message, file=f)
         except:
             # Se houver erro na conexão, encerra a conexão
             server_socket.close()
+            c.close()
             break
 
 def write():
+    client_socket.connect((client_add, client_port))
     """
     Função para enviar mensagens para o servidor.
     """
