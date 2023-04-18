@@ -2,10 +2,10 @@ import threading
 import socket
 
 # Endereço IP e porta do servidor
-IP_R = "127.0.0.10"
-PORT_R = 5001
-IP_S = "127.0.0.20"
-PORT_S = 5002
+IP_R = "127.0.0.30"
+PORT_R = 5003
+IP_S = "127.0.0.10"
+PORT_S = 5001
 
 def receive():
     """
