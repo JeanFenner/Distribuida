@@ -111,13 +111,13 @@ def confirm():
         if len(msgs)>0:
             print("msgs: ",msgs)
             msg = msgs.pop(0)
-#            tr_msg = int(msg[1])
-#            id_msg = int((msg[1]%1)*10)
+            tr_msg = int(msg[1])
+            id_msg = int((msg[1]%1)*10)
             
-#            if id_msg <= ID:
-#                envia_mensagem("ACK_"+str(msg))
-#            elif tr_msg <= tr:
-#                envia_mensagem("ACK"+str(msg))
+            if id_msg <= ID:
+                envia_mensagem("ACK_"+str(msg))
+            elif tr_msg <= tr:
+                envia_mensagem("ACK"+str(msg))
         
 #        if len(msg_ack)>0:
 #            msg = msg_ack[0]
