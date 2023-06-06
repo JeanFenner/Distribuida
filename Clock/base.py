@@ -53,40 +53,32 @@ def trata_cliente(cliente):
     global tr
     while True:
         message = cliente.recv(1024).decode("utf-8")
+        print("MENSAGEM: ", message)
         tratar_mensagem(message)
         tr += 1
 
 def get_message(msg):
-        print("\t",msg)
         op, trid = str(msg).replace('\n','').split(',')
         trid.replace(' ','')
         trid = float(trid)
-        return (op, trid)
+        return [op, trid]
 
 def tratar_mensagem(msg):
     global saldo
     global msgs
 
-    print(msg)
     if str(msg).count("ACK"):
-#        msg_str = str(msg).replace('\n','').split('_')[1]
-#        print("STR",msg_str)
-#        message = get_message(msg_str.replace("('",'').replace("'",'').replace(")",''))
-#        for m in msg_ack:
-#            print(m)
-#            if message == m[0]:
-#                print("SIM")
-        print("ACK")
+        msg_str = str(msg).replace('\n','').split('_')[1]
+        message = get_message(msg_str.replace("['",'').replace("'",'').replace("]",''))
+        for m in msg_ack:
+            if message == m[0]:
+                m[1] += 1
+
     else:
         message = get_message(msg)
         msgs.append(message)
         msgs.sort(key=lambda x:x[1])
-        msg_ack.append((message, int(0)))
-        if message[0] == 'D100':
-            saldo += 100
-        elif message[0] == 'J1':
-            saldo += saldo*.01
-        print(saldo)
+        msg_ack.append([message, int(0)])
 
 # Envia mensagens
 def envia_mensagem(message):
@@ -105,6 +97,8 @@ def write():
 # Envia confirmações
 def confirm():
     global tr
+    global saldo
+
     while True:
         time.sleep(5)
 
@@ -114,19 +108,21 @@ def confirm():
             tr_msg = int(msg[1])
             id_msg = int((msg[1]%1)*10)
             
-            if id_msg <= ID:
+            if tr_msg <= tr:
                 envia_mensagem("ACK_"+str(msg))
-            elif tr_msg <= tr:
+            elif id_msg <= ID:
                 envia_mensagem("ACK_"+str(msg))
         
-#        if len(msg_ack)>0:
-#            msg = msg_ack[0]
-#            if msg[1] == len(clients):
-#                if msg[0] == 'D100':
-#                    saldo += 100
-#                elif msg[0] == 'J1':
-#                    saldo += saldo*.01
-#                print(saldo)
+        if len(msg_ack)>0:
+            print("msg_ack: ",msg_ack)
+            msg = msg_ack[0]
+            if msg[1] == len(clients):
+                if msg[0].count('D100'):
+                    saldo += 100
+                elif msg[0].count('J1'):
+                    saldo += saldo*.01
+                msg_ack.remove(msg)
+                print(saldo)
 
 # Le endereços
 def get_addrs():
