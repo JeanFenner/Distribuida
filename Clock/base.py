@@ -117,7 +117,7 @@ def confirm():
             if id_msg <= ID:
                 envia_mensagem("ACK_"+str(msg))
             elif tr_msg <= tr:
-                envia_mensagem("ACK"+str(msg))
+                envia_mensagem("ACK_"+str(msg))
         
 #        if len(msg_ack)>0:
 #            msg = msg_ack[0]
